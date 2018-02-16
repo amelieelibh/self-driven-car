@@ -1,11 +1,11 @@
 library example;
 import "package:play_phaser/phaser.dart";
-import "package:play_phaser/p2.dart" as p2;
-import "package:play_phaser/ninja.dart" as ninja;
-import "package:play_phaser/arcade.dart" as arcade;
+//import "package:play_phaser/p2.dart" as p2;
+//import "package:play_phaser/ninja.dart" as ninja;
+//import "package:play_phaser/arcade.dart" as arcade;
 //import "package:play_phaser/physics/ninja/body.dart" as Ninja;
  
-import "dart:html" as dom;
+//import "dart:html" as dom;
 
 //@MirrorsUsed(targets: const [GameObject, Gem, Sprite, Text, Particle],  override: '*')
 //import "dart:mirrors";
@@ -16,7 +16,7 @@ import "dart:html" as dom;
 //@MirrorsUsed(targets:const ['PIXI', 'Phaser', 'example'], override: '*')
 //@MirrorsUsed(symbols: "*", override: '*')
 //import "dart:mirrors";
-
+/*
 part "basics/basic_01_load_an_image.dart";
 part "basics/basic_02_click_on_an_image.dart";
 part "basics/basic_03_image_follow_input.dart";
@@ -74,13 +74,15 @@ part "games/games_03_invaders.dart";
 part "games/games_04_matching_pairs.dart";
 part "games/games_05_simon.dart";
 part "games/games_06_starstruck.dart";
+*/
 part "games/games_07_tanks.dart";
-
+/*
 part "p2_physics/p2_01_accelerate_to_object.dart";
 part "p2_physics/p2_02_basic_movement.dart";
 part "p2_physics/p2_03_body_click.dart";
 part "p2_physics/p2_05_chain.dart";
 part "p2_physics/p2_21_pick_up_object.dart";
+*/
 //Map<String, Map<String, State>> Examples = {
 //    "Basic":{
 //        "basic_01_load_an_image": new basic_01_load_an_image(),
@@ -91,7 +93,7 @@ part "p2_physics/p2_21_pick_up_object.dart";
 //
 //
 //};
-
+/*
 Map<String, State> examples = {
 
     "basic_01_load_an_image": new basic_01_load_an_image(),
@@ -165,7 +167,7 @@ Map<String, State> examples = {
     "p2_05_chain":new p2_05_chain(),
     "p2_21_pick_up_object":new p2_21_pick_up_object(),
 };
-
+*/
 main() {
 //  dom.window.console.log("preload");
   print("start");
@@ -189,7 +191,7 @@ main() {
   //var game = new Game(width, height, WEBGL, '');
 
 
-  Game game = new Game(800, 600, CANVAS, 'phaser-example');
+  Game game = new Game(800, 600, AUTO, 'phaser-example');
 /*
   dom.SelectElement select = dom.document.getElementById("examples") as dom.SelectElement;
   for (String key in examples.keys) {
@@ -212,6 +214,6 @@ main() {
   */
   var game_car = new games_07_tanks();
   game.state.add("game_car", game_car);
-  game.state.start(game_car);
+  game.state.start("game_car");
 
 }
