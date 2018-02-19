@@ -27,7 +27,7 @@ main() {
   //var game = new Game(width, height, WEBGL, '');
 
 
-  Game game = new Game(800, 600, CANVAS, 'phaser-example');
+  Game game = new Game(800, 600, AUTO, 'phaser-example');
 
   //game.canvas.style.cursor = "pointer";
   //game.boot();
