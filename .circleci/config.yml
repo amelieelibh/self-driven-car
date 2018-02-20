@@ -22,8 +22,8 @@ jobs:
       - image: google/dart
     working_directory: ~/project
     steps:
-      attach_workspace:
-        at: /root/project
-      run: npm install -g firebase-tools
-      run: firebase login --email amelieelibh@gmail.com --password SakurA01
-      run: firebase deploy
+      - attach_workspace:
+          at: /root/project
+      - run: npm install -g firebase-tools
+      - run: firebase login --email amelieelibh@gmail.com --password SakurA01
+      - run: firebase deploy
