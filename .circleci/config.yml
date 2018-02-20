@@ -1,16 +1,4 @@
 version: 2
-jobs:
-  docker:
-    - image: google/dart
-  working_directory: ~/web
-  steps:
-    - checkout
-    - run:
-      name: "dart circleci firebase"
-      command: echo Dart circleci
-    - run:
-      name: Print the current ti,e
-      command: date
 
 general:
   branches:
