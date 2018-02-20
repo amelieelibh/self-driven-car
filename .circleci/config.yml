@@ -13,6 +13,9 @@ jobs:
           name: Print the current ti,e
           command: date
       - run: dart --version
+      - run: pub get
+      - run: dart --version
+      - run: pub get
       - run: pub build
       - persist_to_workspace:
           root: /root/project
