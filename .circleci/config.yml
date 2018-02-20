@@ -3,24 +3,27 @@ jobs:
   build:
     docker:
       - image: google/dart
-    working_directory: ~/web
+    working_directory: ~/project
     steps:
       - checkout
       - run:
-        name: "dart circleci firebase"
-        command: echo Dart circleci
+          name: "dart circleci firebase"
+          command: echo Dart circleci
       - run:
-        name: Print the current ti,e
-        command: date
+          name: Print the current ti,e
+          command: date
       - run: dart -v
       - run: pub build
+      - persist_to_worlspace:
+          root: /root/project
+          paths: src/public/
   deploy:
     docker:
       - image: google/dart
-    working_directory: ~/web
+    working_directory: ~/project
     steps:
       attach_workspace:
-        at: /root/self-driven-car
+        at: /root/project
       run: npm install -g firebase-tools
       run: firebase login --email amelieelibh@gmail.com --password SakurA01
       run: firebase deploy
