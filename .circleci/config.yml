@@ -26,6 +26,8 @@ jobs:
     steps:
       - run: node --version
       - run: npm --version
+      - run: pwd
+      - run: ls
       - run: npm init
       - run: npm install --save-dev firebase-tools
       - run: firebase login --email amelieelibh@gmail.com --password SakurA01
