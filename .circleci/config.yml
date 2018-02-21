@@ -10,7 +10,7 @@ jobs:
           name: "dart circleci firebase"
           command: echo Dart circleci
       - run:
-          name: Print the current ti,e
+          name: Print the current time
           command: date
       - run: dart --version
       - run: pub get
@@ -22,7 +22,7 @@ jobs:
           root: .
           paths: build
       - store_artifacts:
-        path: /project
+          path: /project
   deploy-job:
     docker:
       - image: circleci/node
