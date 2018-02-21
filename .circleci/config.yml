@@ -1,16 +1,13 @@
 version: 2
 jobs:
   build:
-    machine:
-      node:
-        versiom: 8.0.0
     docker:
       - image: google/dart
       - image: circleci/node
     dependencies:
+        - dart --version
         - node --version
         - npm --version
-        - dart --version
     working_directory: ~/project
     steps:
       - checkout
@@ -34,8 +31,6 @@ jobs:
   deploy:
     docker:
       - image: circleci/node
-    machine:
-        enabled: true
     working_directory: ~/project
     steps:
       - attach_workspace:
