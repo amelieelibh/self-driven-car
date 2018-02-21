@@ -19,6 +19,8 @@ jobs:
       - run: pwd
       - run: ls -a
       - run: git add -f build
+      - run: git config --global user.email "amelieelibh@gmail.com"
+      - run: git config --global user.name "Amelie"
       - run: git commit -m 'circleci build'
       - run: git push origin master
 #      - persist_to_workspace:
