@@ -4,10 +4,6 @@ jobs:
     docker:
       - image: google/dart
       - image: circleci/node
-    dependencies:
-        - dart --version
-        - node --version
-        - npm --version
     working_directory: ~/project
     steps:
       - checkout
@@ -22,6 +18,8 @@ jobs:
       - run: dart --version
       - run: pub get
       - run: pub build
+      - run: node --version
+      - run: npm --version
       - run: npm install -g firebase-tools
       - run: firebase login --email amelieelibh@gmail.com --password SakurA01
       - run: firebase deploy
