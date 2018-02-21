@@ -24,7 +24,7 @@ jobs:
     steps:
       - run: node --version
       - run: npm --version
-      - run: npm install -g firebase-tools
+      - run: sudo npm install -g firebase-tools
       - run: firebase login --email amelieelibh@gmail.com --password SakurA01
       - run: firebase deploy
 workflows:
