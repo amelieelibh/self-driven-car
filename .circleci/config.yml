@@ -32,13 +32,13 @@ jobs:
       - image: circleci/node
     steps:
       - attach_workspace:
-          at: build
+          at: .
       - run: node --version
       - run: npm --version
       - run: pwd
       - run: ls -a
-      - run: cd ..
-      - run: ls -a
+      - run: ls -a build
+      - run: ls -a ..
       - run: npm install --save-dev firebase-tools
       - run: firebase login --email amelieelibh@gmail.com --password SakurA01
       - run: firebase deploy
