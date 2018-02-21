@@ -17,16 +17,11 @@ jobs:
       - run: dart --version
       - run: pub get
       - run: pub build
-      - persist_to_workspace:
-          root: /root/project
-          paths: build
   deploy-job:
     docker:
       - image: circleci/node
     working_directory: ~/project
     steps:
-      - attach_workspace:
-          at: /root/project
       - run: node --version
       - run: npm --version
       - run: npm install -g firebase-tools
