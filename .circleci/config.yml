@@ -16,10 +16,17 @@ jobs:
       - run: dart --version
       - run: pub get
       - run: pub build
-      - run: ls -al
+      - run: pwd
+      - run: ls -a
+#      - run: git add build
+#      - run: git commit -m 'circleci build'
+#      - run: git push origin master
       - persist_to_workspace:
           root: .
           paths: build
+      - persist_to_workspace:
+          root: .
+          paths: package.json
   deploy-job:
     docker:
       - image: circleci/node
@@ -29,7 +36,9 @@ jobs:
       - run: node --version
       - run: npm --version
       - run: pwd
-      - run: ls -al
+      - run: ls -a
+      - run: cd ..
+      - run: ls -a
       - run: npm install --save-dev firebase-tools
       - run: firebase login --email amelieelibh@gmail.com --password SakurA01
       - run: firebase deploy
