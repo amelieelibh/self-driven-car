@@ -17,12 +17,16 @@ jobs:
       - run: dart --version
       - run: pub get
       - run: pub build
+      - run: ls
+      - persist_to_workspace:
+          root: .
+          paths: build
+      - store_artifacts:
+        path: /project
   deploy-job:
     docker:
       - image: circleci/node
     working_directory: ~/project
-    dependencies:
-      
     steps:
       - run: node --version
       - run: npm --version
