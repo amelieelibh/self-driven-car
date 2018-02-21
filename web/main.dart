@@ -40,7 +40,7 @@ main() {
   //game.state.add("Game", jsifyObject(driverState));
   //game.state.add('Game', jsify({'preload':driverState.preload}));
   //game.state.add('Game', jsify({'preload':allowInterop(driverState.preload)}));
-  game.state.add('Game', driverState.jsonMap);
+  game.state.add('Game', driverState.jsonMap());
   //game.state.add('EndGame', null);
   print("start");
   game.state.start('Game');

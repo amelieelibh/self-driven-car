@@ -240,7 +240,7 @@ class DriverState extends SerializableMap {
 
   }
   
-  dynamic Get jsonMap{
+  dynamic jsonMap(){
     return jsify({'preload': preload, 
             'create' : create
             'update' : update, 
