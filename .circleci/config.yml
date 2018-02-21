@@ -1,9 +1,8 @@
 version: 2
 jobs:
-  build:
+  build-job:
     docker:
       - image: google/dart
-      - image: circleci/node
     working_directory: ~/project
     steps:
       - checkout
@@ -18,21 +17,30 @@ jobs:
       - run: dart --version
       - run: pub get
       - run: pub build
-      - run: node --version
-      - run: npm --version
-      - run: npm install -g firebase-tools
-      - run: firebase login --email amelieelibh@gmail.com --password SakurA01
-      - run: firebase deploy
       - persist_to_workspace:
           root: /root/project
           paths: build
-  deploy:
+  deploy-job:
     docker:
       - image: circleci/node
     working_directory: ~/project
     steps:
       - attach_workspace:
           at: /root/project
+      - run: node --version
+      - run: npm --version
       - run: npm install -g firebase-tools
       - run: firebase login --email amelieelibh@gmail.com --password SakurA01
       - run: firebase deploy
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build-job
+      - deploy-job:
+          requires:
+            - build-job
+          filters:
+            branches:
+              only: master
+              
