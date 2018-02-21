@@ -1,0 +1,11 @@
+{
+  "name": "my_package",
+  "version": "1.0.0",
+  "dependencies": {
+    "my_dep": "^1.0.0"
+  },
+  "devDependencies" : {
+    "my_test_framework": "^3.1.0"
+  }
+}
+The --save
