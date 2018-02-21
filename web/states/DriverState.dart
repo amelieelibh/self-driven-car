@@ -6,7 +6,6 @@ import 'package:phaser/phaser.dart' show Game, State, Group, Physics, Rectangle,
 import 'package:js/js.dart';
 import '../entities/Tanks.dart';
 
-@serializable
 class DriverState {
   var land;
 
@@ -242,7 +241,7 @@ class DriverState {
   
   dynamic jsonMap(){
     return jsify({'preload': preload, 
-            'create' : create
+            'create' : create,
             'update' : update, 
             'render' : render});
   }
