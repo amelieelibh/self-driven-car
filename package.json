@@ -2,7 +2,7 @@
   "name": "sdc_package",
   "version": "1.0.0",
   "devDependencies" : {
-    "firebase-tools": "4.10.0"
+    "firebase-tools": "^3"
   }
 }
 P
