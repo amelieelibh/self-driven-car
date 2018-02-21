@@ -1,8 +1,22 @@
 {
-  "name": "sdc_package",
+  "name": "play_phaser",
   "version": "1.0.0",
-  "devDependencies" : {
-    "firebase-tools": "^3"
+  "description": "play_phaser ========= A Dart port of Phaser (2.1.2)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amelieelibh/self-driven-car.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amelieelibh/self-driven-car/issues"
+  },
+  "homepage": "https://github.com/amelieelibh/self-driven-car",
+  "devDependencies": {
+    "firebase-tools": "^3.10.0"
   }
 }
-P
