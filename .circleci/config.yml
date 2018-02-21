@@ -18,7 +18,7 @@ jobs:
       - run: pub build
       - run: pwd
       - run: ls -a
-      - run: git add build
+      - run: git add -f build
       - run: git commit -m 'circleci build'
       - run: git push origin master
 #      - persist_to_workspace:
