@@ -7,7 +7,7 @@ import 'package:js/js.dart';
 import '../entities/Tanks.dart';
 
 @serializable
-class DriverState extends SerializableMap {
+class DriverState {
   var land;
 
   var shadow;
