@@ -1,11 +1,7 @@
 {
-  "name": "my_package",
+  "name": "sdc_package",
   "version": "1.0.0",
-  "dependencies": {
-    "my_dep": "^1.0.0"
-  },
   "devDependencies" : {
-    "my_test_framework": "^3.1.0"
+    "my_test_framework": "^5.0.1"
   }
 }
-The --save
