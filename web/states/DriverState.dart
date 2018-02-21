@@ -1,109 +1,22 @@
-part of example;
+@JS('selfdrivencar')
+library com.aebh.selfdrivencar.states;
 
-class EnemyTank {
-  Game game;
-  int health=3;
-  Sprite player;
-  Group bullets;
-  num fireRate;
-  num nextFire;
-  bool alive;
+import 'package:phaser/phaser.dart' show Game, State, Group, Physics, Rectangle, PhaserSprite;
+
+import 'package:js/js.dart';
+import 'package:dson/dson.dart';
+import '../entities/Tanks.dart';
+
+@serializable
+class DriverState extends SerializableMap {// extends State {
   
-  Sprite shadow;
-  Sprite tank;
-  Sprite turret;
-  
-
-  EnemyTank(int index, Game game, Sprite player, Group  bullets) {
-    var x = game.world.randomX;
-    var y = game.world.randomY;
-
+  //DriverState.fakeConstructor$() : super.fakeConstructor$();
+  /*DriverState(Game game){
     this.game = game;
-    this.health = 3;
-    this.player = player;
-    this.bullets = bullets;
-    this.fireRate = 1000;
-    this.nextFire = 0;
-    this.alive = true;
-
-    this.shadow = game.add.sprite(x, y, 'enemy', 'shadow');
-    this.tank = game.add.sprite(x, y, 'enemy', 'tank1');
-    this.turret = game.add.sprite(x, y, 'enemy', 'turret');
-
-    this.shadow.anchor.set(0.5);
-    this.tank.anchor.set(0.5);
-    this.turret.anchor.set(0.3, 0.5);
-
-    this.tank.name = index.toString();
-    game.physics.enable(this.tank, Physics.ARCADE);
-    this.tank.body.immovable = false;
-    this.tank.body.collideWorldBounds = true;
-    this.tank.body.bounce.setTo(1, 1);
-
-    this.tank.angle = game.rnd.angle();
-
-    game.physics.arcade.velocityFromRotation(this.tank.rotation, 100, this.tank.body.velocity);
+    print("DriverState constructor");
   }
-  
-  damage () {
-
-      this.health -= 1;
-
-      if (this.health <= 0)
-      {
-          this.alive = false;
-
-          this.shadow.kill();
-          this.tank.kill();
-          this.turret.kill();
-
-          return true;
-      }
-
-      return false;
-
-  }
-
-  update () {
-
-      this.shadow.x = this.tank.x;
-      this.shadow.y = this.tank.y;
-      this.shadow.rotation = this.tank.rotation;
-
-      this.turret.x = this.tank.x;
-      this.turret.y = this.tank.y;
-      this.turret.rotation = this.game.physics.arcade.angleBetween(this.tank, this.player);
-
-      if (this.game.physics.arcade.distanceBetween(this.tank, this.player) < 300)
-      {
-          if (this.game.time.now > this.nextFire && this.bullets.countDead() > 0)
-          {
-              this.nextFire = this.game.time.now + this.fireRate;
-
-              var bullet = this.bullets.getFirstDead();
-
-              bullet.reset(this.turret.x, this.turret.y);
-
-              bullet.rotation = this.game.physics.arcade.moveToObject(bullet, this.player, 500);
-          }
-      }
-
-  }
-}
-
-
-class games_07_tanks extends State {
-  preload() {
-
-    game.load.atlas('tank', 'assets/games/tanks/tanks.png', 'assets/games/tanks/tanks.json');
-    game.load.atlas('enemy', 'assets/games/tanks/enemy-tanks.png', 'assets/games/tanks/tanks.json');
-    game.load.image('logo', 'assets/games/tanks/logo.png');
-    game.load.image('bullet', 'assets/games/tanks/bullet.png');
-    game.load.image('earth', 'assets/games/tanks/scorched_earth.png');
-    game.load.spritesheet('kaboom', 'assets/games/tanks/explosion.png', 64, 64, 23);
-
-  }
-
+  Game game;
+*/
   var land;
 
   var shadow;
@@ -125,8 +38,21 @@ class games_07_tanks extends State {
   var fireRate = 100;
   var nextFire = 0;
 
-  create() {
+  @JS()
+  preload(Game game) { 
+    
+    print("preload");
+    game.load.atlas('tank', 'assets/games/tanks/tanks.png', 'assets/games/tanks/tanks.json');
+    game.load.atlas('enemy', 'assets/games/tanks/enemy-tanks.png', 'assets/games/tanks/tanks.json');
+    game.load.image('logo', 'assets/games/tanks/logo.png');
+    game.load.image('bullet', 'assets/games/tanks/bullet.png');
+    game.load.image('earth', 'assets/games/tanks/scorched_earth.png');
+    game.load.spritesheet('kaboom', 'assets/games/tanks/explosion.png', 64, 64, 23);
 
+  }
+
+  create(Game game) {
+    print("Driver State Create");
     //  Resize our game world to be a 2000 x 2000 square
     game.world.setBounds(-1000, -1000, 2000, 2000);
 
@@ -156,7 +82,7 @@ class games_07_tanks extends State {
     enemyBullets.physicsBodyType = Physics.ARCADE;
     enemyBullets.createMultiple(100, 'bullet');
 
-    enemyBullets.forEach((Sprite s){
+    enemyBullets.forEach((PhaserSprite s){
       s.anchor.setTo(0.5);
       s.outOfBoundsKill=true;
       s.checkWorldBounds=true;
@@ -186,7 +112,7 @@ class games_07_tanks extends State {
     bullets.physicsBodyType = Physics.ARCADE;
     bullets.createMultiple(30, 'bullet', 0, false);
     
-    bullets.forEach((Sprite s){
+    bullets.forEach((PhaserSprite s){
       s.anchor.setTo(0.5);
       s.outOfBoundsKill=true;
       s.checkWorldBounds=true;
@@ -208,24 +134,24 @@ class games_07_tanks extends State {
     logo = game.add.sprite(0, 200, 'logo');
     logo.fixedToCamera = true;
 
-    game.input.onDown.add(removeLogo);
+    game.input.onDown.add(removeLogo, null, null, game);
 
     game.camera.follow(tank);
     game.camera.deadzone = new Rectangle(150, 150, 500, 300);
     game.camera.focusOnXY(0, 0);
 
     cursors = game.input.keyboard.createCursorKeys();
-
+    print("Driver State Created");
   }
 
-  removeLogo(p,e) {
+  removeLogo(p,e, Game game) {
 
     game.input.onDown.remove(removeLogo);
     logo.kill();
 
   }
 
-  update() {
+  update(Game game) {
 
     game.physics.arcade.overlap(enemyBullets, tank, bulletHitPlayer, null);
 
@@ -274,7 +200,7 @@ class games_07_tanks extends State {
 
     if (game.input.activePointer.isDown) {
       //  Boom!
-      fire();
+      fire(game);
     }
 
   }
@@ -299,7 +225,7 @@ class games_07_tanks extends State {
 
   }
 
-  fire() {
+  fire(Game game) {
 
     if (game.time.now > nextFire && bullets.countDead() > 0) {
       nextFire = game.time.now + fireRate;
@@ -313,7 +239,7 @@ class games_07_tanks extends State {
 
   }
 
-  render() {
+  render(Game game) {
 
     // game.debug.text('Active Bullets: ' + bullets.countLiving() + ' / ' + bullets.length, 32, 32);
     game.debug.text('Enemies: ' + enemiesAlive.toString() + ' / ' + enemiesTotal.toString(), 32, 32);

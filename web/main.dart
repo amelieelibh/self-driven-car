@@ -1,9 +1,14 @@
-library example;
+library com.aebh.selfdrivencar;
+
+import 'dart:html' show window;
 import 'package:phaser/phaser.dart';
- 
+import 'package:js/js.dart';
+import 'package:js/js_util.dart';
+import 'dart:mirrors';
+import 'states/DriverState.dart' show DriverState;
+import 'package:dson/dson.dart';
 //import "dart:html" as dom;
 
-part "games/games_07_tanks.dart";
 main() {
 //  dom.window.console.log("preload");
   print("start");
@@ -25,16 +30,44 @@ main() {
 //  }
 
   //var game = new Game(width, height, WEBGL, '');
-
-
-  Game game = new Game(800, 600, AUTO, 'phaser-example');
-
+  var driverState =new DriverState();
+  print("states");
+  
+  Game game = new Game(window.innerWidth, window.innerHeight, Phaser.CANVAS,
+      'phaser-example');
+  //game.state.add('Boot', null);
+  //game.state.add('Preloades', null);
+  //game.state.add('MainMenu', null);
+  //game.state.add("Game", jsifyObject(driverState));
+  game.state.add('Game', jsify({'preload':driverState.preload}));
+  //game.state.add('Game', jsify({'preload':allowInterop(driverState.preload)}));
+  //game.state.add('EndGame', null);
+  print("start");
+  game.state.start('Game');
+  print("main end");
   //game.canvas.style.cursor = "pointer";
   //game.boot();
   //print("start");
   
-  var game_car = new games_07_tanks();
-  game.state.add("game_car", game_car);
-  game.state.start("game_car");
+}
 
+
+dynamic jsifyObject(dynamic obj){
+  Map<String, Function> m = new Map();
+  InstanceMirror instanceMirror = reflect(obj);
+  ClassMirror classMirror = instanceMirror.type;
+  Map<Symbol, MethodMirror> declarations = classMirror.instanceMembers;
+  for(MethodMirror v in declarations.values){
+    if(v.isConstructor || v.isPrivate || !v.isRegularMethod || v.isOperator){
+      continue;
+    }
+    print(MirrorSystem.getName(v.simpleName));
+    var name = MirrorSystem.getName(v.simpleName);
+    m.putIfAbsent(MirrorSystem.getName(v.simpleName), () => allowInterop(v));
+  }
+  print("map result");
+  for(Function i in m.values){
+    print(""+i.toString());
+  }
+  return jsify(m);
 }
