@@ -21,8 +21,6 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: build
-      - store_artifacts:
-          path: /project
   deploy-job:
     docker:
       - image: circleci/node
