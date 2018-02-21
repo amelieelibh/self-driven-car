@@ -4,7 +4,6 @@ library com.aebh.selfdrivencar.states;
 import 'package:phaser/phaser.dart' show Game, State, Group, Physics, Rectangle, PhaserSprite;
 
 import 'package:js/js.dart';
-import 'package:dson/dson.dart';
 import '../entities/Tanks.dart';
 
 @serializable
