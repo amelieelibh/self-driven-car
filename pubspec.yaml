@@ -7,7 +7,6 @@ homepage: https://github.com/amelieelibh/self-driven-car
 dependencies:
   browser: ">=0.10.0+2 <0.11.0"
   phaser: "^2.9.4"
-  dson: "^0.5.0"
 
 
 transformers:

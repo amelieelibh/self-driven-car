@@ -8,15 +8,7 @@ import 'package:dson/dson.dart';
 import '../entities/Tanks.dart';
 
 @serializable
-class DriverState extends SerializableMap {// extends State {
-  
-  //DriverState.fakeConstructor$() : super.fakeConstructor$();
-  /*DriverState(Game game){
-    this.game = game;
-    print("DriverState constructor");
-  }
-  Game game;
-*/
+class DriverState extends SerializableMap {
   var land;
 
   var shadow;
@@ -51,6 +43,7 @@ class DriverState extends SerializableMap {// extends State {
 
   }
 
+  @JS()
   create(Game game) {
     print("Driver State Create");
     //  Resize our game world to be a 2000 x 2000 square
@@ -151,6 +144,7 @@ class DriverState extends SerializableMap {// extends State {
 
   }
 
+  @JS()
   update(Game game) {
 
     game.physics.arcade.overlap(enemyBullets, tank, bulletHitPlayer, null);
@@ -239,10 +233,18 @@ class DriverState extends SerializableMap {// extends State {
 
   }
 
+  @JS()
   render(Game game) {
 
     // game.debug.text('Active Bullets: ' + bullets.countLiving() + ' / ' + bullets.length, 32, 32);
     game.debug.text('Enemies: ' + enemiesAlive.toString() + ' / ' + enemiesTotal.toString(), 32, 32);
 
+  }
+  
+  dynamic Get jsonMap{
+    return jsify({'preload': preload, 
+            'create' : create
+            'update' : update, 
+            'render' : render});
   }
 }
