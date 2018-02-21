@@ -2,6 +2,6 @@
   "name": "sdc_package",
   "version": "1.0.0",
   "devDependencies" : {
-    "my_test_framework": "^5.0.1"
+    "firebase-tools": "^5.0.1"
   }
 }
