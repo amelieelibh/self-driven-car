@@ -18,21 +18,22 @@ jobs:
       - run: pub build
       - run: pwd
       - run: ls -a
-#      - run: git add build
-#      - run: git commit -m 'circleci build'
-#      - run: git push origin master
-      - persist_to_workspace:
-          root: .
-          paths: build
-      - persist_to_workspace:
-          root: .
-          paths: package.json
+      - run: git add build
+      - run: git commit -m 'circleci build'
+      - run: git push origin master
+#      - persist_to_workspace:
+#          root: .
+#          paths: build
+#      - persist_to_workspace:
+#          root: .
+#          paths: package.json
   deploy-job:
     docker:
       - image: circleci/node
     steps:
-      - attach_workspace:
-          at: .
+#      - attach_workspace:
+#          at: .
+      - checkout
       - run: node --version
       - run: npm --version
       - run: pwd
