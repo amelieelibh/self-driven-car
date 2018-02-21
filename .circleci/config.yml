@@ -24,14 +24,12 @@ jobs:
     docker:
       - image: circleci/node
     steps:
-      - checkout
       - attach_workspace:
           at: build
       - run: node --version
       - run: npm --version
       - run: pwd
       - run: ls -al
-      - run: npm init
       - run: npm install --save-dev firebase-tools
       - run: firebase login --email amelieelibh@gmail.com --password SakurA01
       - run: firebase deploy
