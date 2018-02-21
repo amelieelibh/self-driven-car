@@ -3,7 +3,6 @@ jobs:
   build-job:
     docker:
       - image: google/dart
-    working_directory: ~/project
     steps:
       - checkout
       - run:
@@ -17,19 +16,21 @@ jobs:
       - run: dart --version
       - run: pub get
       - run: pub build
-      - run: ls
+      - run: ls -al
       - persist_to_workspace:
           root: .
           paths: build
   deploy-job:
     docker:
       - image: circleci/node
-    working_directory: ~/project
     steps:
+      - checkout
+      - attach_workspace:
+          at: build
       - run: node --version
       - run: npm --version
       - run: pwd
-      - run: ls
+      - run: ls -al
       - run: npm init
       - run: npm install --save-dev firebase-tools
       - run: firebase login --email amelieelibh@gmail.com --password SakurA01
