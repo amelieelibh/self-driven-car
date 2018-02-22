@@ -1,11 +1,13 @@
 version: 2
 jobs:
   build-job:
-    working_directory: ~/tmp/project
+    working_directory: ~/cci-sdc
     docker:
       - image: google/dart
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/cci-sdc
       - run: dart --version
       - run: pub get
       - run: dart --version
@@ -19,8 +21,8 @@ jobs:
 #      - run: git commit -m 'circleci build'
 #      - run: git push -f origin master
       - persist_to_workspace:
-          root: /root/tmp
-          paths: project
+          root: .
+          paths: build
 #      - persist_to_workspace:
 #          root: .
 #          paths: package.json
@@ -30,7 +32,7 @@ jobs:
       - image: circleci/node
     steps:
       - attach_workspace:
-          at: /tmp/project
+          at: ~/cci-sdc
 #      - checkout
       - run: node --version
       - run: npm --version
