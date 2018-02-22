@@ -1,9 +1,7 @@
-defaults:
-  working_directory: /tmp/project
-
 version: 2
 jobs:
   build-job:
+    working_directory: ~/tmp/project
     docker:
       - image: google/dart
     steps:
@@ -27,6 +25,7 @@ jobs:
 #          root: .
 #          paths: package.json
   deploy-job:
+    working_directory: ~/tmp/project
     docker:
       - image: circleci/node
     steps:
