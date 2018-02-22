@@ -42,7 +42,7 @@ jobs:
       - run: ls -a ..
       - run: ls -a cci-sdc
       - run: cd cci-sdc
-      - run: npm install --save-dev firebase-tools cci-sdc
+      - run: npm install --save-dev cci-sdc
       - run: firebase login --email $US_EMAIL --password $US_PASS
       - run: firebase deploy
 workflows:
