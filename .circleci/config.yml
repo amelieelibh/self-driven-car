@@ -27,12 +27,13 @@ jobs:
 #          root: .
 #          paths: package.json
   deploy-job:
-    #working_directory: ~/cci-sdc
+    working_directory: ~/cci-sdc
     docker:
       - image: circleci/node
     steps:
       - attach_workspace:
-          at: ~/cci-sdc
+          #at: ~/cci-sdc
+          at: ./
 #      - checkout
       - run: node --version
       - run: npm --version
