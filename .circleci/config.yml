@@ -1,3 +1,6 @@
+defaults:
+  working_directory: /tmp/project
+
 version: 2
 jobs:
   build-job:
@@ -5,12 +8,6 @@ jobs:
       - image: google/dart
     steps:
       - checkout
-      - run:
-          name: "dart circleci firebase"
-          command: echo Dart circleci
-      - run:
-          name: Print the current time
-          command: date
       - run: dart --version
       - run: pub get
       - run: dart --version
@@ -18,14 +15,14 @@ jobs:
       - run: pub build
       - run: pwd
       - run: ls -a
-      - run: git add -f build
-      - run: git config --global user.email "$US_EMAIL"
-      - run: git config --global user.name "$US_NAME"
-      - run: git commit -m 'circleci build'
-      - run: git push -f origin master
-#      - persist_to_workspace:
-#          root: .
-#          paths: build
+#      - run: git add -f build
+#      - run: git config --global user.email "$US_EMAIL"
+#      - run: git config --global user.name "$US_NAME"
+#      - run: git commit -m 'circleci build'
+#      - run: git push -f origin master
+      - persist_to_workspace:
+          root: /tmp
+          paths: project
 #      - persist_to_workspace:
 #          root: .
 #          paths: package.json
@@ -33,9 +30,9 @@ jobs:
     docker:
       - image: circleci/node
     steps:
-#      - attach_workspace:
-#          at: .
-      - checkout
+      - attach_workspace:
+          at: /tmp/project
+#      - checkout
       - run: node --version
       - run: npm --version
       - run: pwd
