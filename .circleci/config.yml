@@ -27,12 +27,12 @@ jobs:
 #          root: .
 #          paths: package.json
   deploy-job:
-    working_directory: ~/tempdeploy
+    working_directory: ~/cci-sdc
     docker:
       - image: circleci/node
     steps:
       - attach_workspace:
-          at: ~/cci-sdc
+          at: ~/temp
 #      - checkout
       - run: node --version
       - run: npm --version
