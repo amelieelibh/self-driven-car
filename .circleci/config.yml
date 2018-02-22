@@ -25,7 +25,7 @@ jobs:
 #          root: .
 #          paths: package.json
   deploy-job:
-    working_directory: ~/tmp/project
+    working_directory: /root/tmp/project
     docker:
       - image: circleci/node
     steps:
@@ -36,8 +36,8 @@ jobs:
       - run: npm --version
       - run: pwd
       - run: ls -a
-      - run: ls -a build
       - run: ls -a ..
+      - run: ls -a build
       - run: npm install --save-dev firebase-tools
       - run: firebase login --email $US_EMAIL --password $US_PASS
       - run: firebase deploy
