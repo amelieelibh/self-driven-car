@@ -32,7 +32,7 @@ jobs:
       - image: circleci/node
     steps:
       - attach_workspace:
-          at: ~/temp
+          at: ~/cci-sdc
 #      - checkout
       - run: node --version
       - run: npm --version
