@@ -19,7 +19,7 @@ jobs:
 #      - run: git commit -m 'circleci build'
 #      - run: git push -f origin master
       - persist_to_workspace:
-          root: /tmp
+          root: /root/tmp
           paths: project
 #      - persist_to_workspace:
 #          root: .
