@@ -21,8 +21,8 @@ jobs:
 #      - run: git commit -m 'circleci build'
 #      - run: git push -f origin master
       - persist_to_workspace:
-          root: .
-          paths: build
+          root: ..
+          paths: cci-sdc
 #      - persist_to_workspace:
 #          root: .
 #          paths: package.json
