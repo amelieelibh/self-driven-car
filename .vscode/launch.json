@@ -4,7 +4,6 @@
     // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
             "name": "Dart command line",
             "program": "${workspaceRoot}/bin/main.dart",
@@ -12,8 +11,7 @@
             "type": "dart-cli",
             "args": [
                 "--port=8888"
-            ],
-            "cwd": "${workspaceRoot}",
+            ]
         }
     ]
 }

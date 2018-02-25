@@ -1,10 +1,10 @@
-library com.aebh.selfdrivencar;
+//library com.aebh.selfdrivencar;
 
 import 'dart:html' show window;
 import 'package:phaser/phaser.dart';
-import 'package:js/js.dart';
-import 'package:js/js_util.dart';
-import 'dart:mirrors';
+//import 'package:js/js.dart';
+//import 'package:js/js_util.dart';
+//import 'dart:mirrors';
 import 'states/DriverState.dart' show DriverState;
 //import "dart:html" as dom;
 
@@ -32,7 +32,7 @@ main() {
   var driverState =new DriverState();
   print("states");
   
-  Game game = new Game(window.innerWidth, window.innerHeight, Phaser.CANVAS,
+  Game game = new Game(window.innerWidth, window.innerHeight, Phaser.AUTO,
       'phaser-example');
   //game.state.add('Boot', null);
   //game.state.add('Preloades', null);
@@ -51,7 +51,7 @@ main() {
   
 }
 
-
+/*
 dynamic jsifyObject(dynamic obj){
   Map<String, Function> m = new Map();
   InstanceMirror instanceMirror = reflect(obj);
@@ -71,3 +71,4 @@ dynamic jsifyObject(dynamic obj){
   }
   return jsify(m);
 }
+*/

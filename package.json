@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/amelieelibh/self-driven-car",
   "devDependencies": {
-    "firebase-tools": "^3.10.0"
+    "firebase-tools": "^3.17.4"
   }
 }
