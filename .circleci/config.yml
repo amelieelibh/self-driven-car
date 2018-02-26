@@ -44,8 +44,8 @@ jobs:
       #- run: cd cci-sdc
       - run: npm install --save-dev firebase-tools
       - run: npm firebase -version
-      - run: firebase login --email $US_EMAIL --password $US_PASS
-      - run: firebase deploy
+      - run: npm firebase login --email $US_EMAIL --password $US_PASS
+      - run: npm firebase deploy
 workflows:
   version: 2
   build-deploy:
