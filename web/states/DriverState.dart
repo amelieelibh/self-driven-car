@@ -1,7 +1,7 @@
-@JS('selfdrivencar')
+//@JS('com.aebh.selfdrivencar')
 library com.aebh.selfdrivencar.states;
 
-import 'package:phaser/phaser.dart'; // show Game, State, Group, Physics, Rectangle, PhaserSprite;
+import 'package:phaser/phaser.dart' show Game, State, Group, Physics, Rectangle, PhaserSprite;
 
 //import 'dart:html' show window;
 import 'package:js/js.dart';
@@ -10,6 +10,7 @@ import 'package:js/js_util.dart';
 import '../entities/Tanks.dart';
 
 class DriverState {
+
   var land;
 
   var shadow;
@@ -28,10 +29,13 @@ class DriverState {
   var cursors;
 
   Group bullets;
-  var fireRate = 100;
+  var fireRate = 300;
   var nextFire = 0;
 
-  @JS()
+  DriverState(){
+  }
+
+  //@JS()
   preload(Game game) { 
     
     print("preload");
@@ -44,7 +48,7 @@ class DriverState {
 
   }
 
-  @JS()
+  //@JS()
   create(Game game) {
     print("Driver State Create");
     //  Resize our game world to be a 2000 x 2000 square
@@ -62,7 +66,7 @@ class DriverState {
     //  This will force it to decelerate and limit its speed
     game.physics.enable(tank, Physics.ARCADE);
     game.physics.arcade.gravity.y = 0;
-    tank.body.drag = 0.2;
+    tank.body.drag.setTo(0.2);
     tank.body.maxVelocity.setTo(400, 400);
     tank.body.collideWorldBounds = true;
 
@@ -76,21 +80,21 @@ class DriverState {
     enemyBullets.physicsBodyType = Physics.ARCADE;
     enemyBullets.createMultiple(100, 'bullet');
 
-    enemyBullets.forEachAlive(allowInterop((PhaserSprite s){
+    enemyBullets.forEach(allowInterop((PhaserSprite s){
       s.anchor.setTo(0.5);
       s.outOfBoundsKill=true;
       s.checkWorldBounds=true;
-    }));
-    //enemyBullets.setAll('anchor.x', 0.5);
-    //enemyBullets.setAll('anchor.y', 0.5);
-    //enemyBullets.setAll('outOfBoundsKill', true);
-    //enemyBullets.setAll('checkWorldBounds', true);
+    }), null);
+    enemyBullets.setAll('anchor.x', 0.5);
+    enemyBullets.setAll('anchor.y', 0.5);
+    enemyBullets.setAll('outOfBoundsKill', true);
+    enemyBullets.setAll('checkWorldBounds', true);
 
     //  Create some baddies to waste :)
     enemies = [];
 
-    enemiesTotal = 50;
-    enemiesAlive = 50;
+    enemiesTotal = 25;
+    enemiesAlive = 25;
 
     for (var i = 0; i < enemiesTotal; i++) {
       enemies.add(new EnemyTank(i, game, tank, enemyBullets));
@@ -106,11 +110,11 @@ class DriverState {
     bullets.physicsBodyType = Physics.ARCADE;
     bullets.createMultiple(30, 'bullet', 0, false);
     
-    bullets.forEachAlive(allowInterop((PhaserSprite s){
+    bullets.forEach(allowInterop((PhaserSprite s){
       s.anchor.setTo(0.5);
       s.outOfBoundsKill=true;
       s.checkWorldBounds=true;
-    }));
+    }), null);
 
 
     //  Explosion pool
@@ -138,7 +142,7 @@ class DriverState {
     print("Driver State Created");
   }
   
-  @JS()
+  //@JS("removeLogo")
   removeLogo(p,e, Game game) {
 
     game.input.onDown.remove(allowInterop(removeLogo));
@@ -146,7 +150,7 @@ class DriverState {
 
   }
 
-  @JS()
+  //@JS()
   update(Game game) {
     game.physics.arcade.overlap(enemyBullets, tank, allowInterop(bulletHitPlayer), null);
 
@@ -199,21 +203,18 @@ class DriverState {
       //  Boom!
       fire(game);
     }
-
   }
 
-  @JS()
+  //@JS()
   bulletHitPlayer(tank, bullet) {
 
     bullet.kill();
 
   }
   
-  @JS()
   bulletHitEnemy(tank, bullet) {
 
     bullet.kill();
-
     var destroyed = enemies[int.parse(tank.name)].damage();
 
     if (destroyed) {
@@ -221,8 +222,8 @@ class DriverState {
       explosionAnimation.reset(tank.x, tank.y);
       explosionAnimation.play('kaboom', 30, false, true);
     }
-
   }
+  
 
   fire(Game game) {
 
@@ -238,7 +239,7 @@ class DriverState {
 
   }
 
-  @JS()
+  //@JS()
   render(Game game) {
 
     // game.debug.text('Active Bullets: ' + bullets.countLiving() + ' / ' + bullets.length, 32, 32);

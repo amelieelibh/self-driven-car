@@ -8,23 +8,23 @@ dependencies:
   browser: ">=0.10.0+2 <0.11.0"
   phaser: "^2.9.4"
   js: ^0.6.1
-  func: ^0.1.0
-dev_dependencies:
-  dart_to_js_script_rewriter: ^1.0.0
+#dev_dependencies:
+#  dart_to_js_script_rewriter: ^1.0.0
 
-transformers:
-- $dart2js:
-    checked: false
-    minify: false
-    suppressWarnings: false
-    suppressHints: false
-    terse: false
-    verbose: true
+#transformers:
+#- $dart2js:
+    #checked: false
+    #minify: false
+    #suppressWarnings: false
+    #suppressHints: false
+    #terse: false
+    #verbose: true
     
 dev_transformers:
   - dart_to_js_script_rewriter
-environment:
-  sdk: ">=1.19.0"
+#environment:
+#  sdk: ">=1.19.0"
 web:
   compiler:
-    debug: dartdevc
+    #debug: dartdevc
+    debug: dart2js

@@ -17,9 +17,16 @@ class EnemyTank {
   
 
   EnemyTank(int index, Game game, PhaserSprite player, Group  bullets) {
+      print("worldX,worldY=${game.world.width},${game.world.height}");
     var x = game.world.randomX;
     var y = game.world.randomY;
-
+    if(x >= 0 && x < 500){
+        x = 500;
+    }else if(x < 0 && x > -500){
+        x = -500;
+    }
+    //x = -2000; y = 0;
+    print("x,y=$x,$y");
     this.game = game;
     this.health = 3;
     this.player = player;
@@ -31,7 +38,7 @@ class EnemyTank {
     this.shadow = game.add.sprite(x, y, 'enemy', 'shadow');
     this.tank = game.add.sprite(x, y, 'enemy', 'tank1');
     this.turret = game.add.sprite(x, y, 'enemy', 'turret');
-
+    
     this.shadow.anchor.setTo(0.5);
     this.tank.anchor.setTo(0.5);
     this.turret.anchor.setTo(0.3, 0.5);
@@ -39,12 +46,12 @@ class EnemyTank {
     this.tank.name = index.toString();
     game.physics.enable(this.tank, Physics.ARCADE);
     this.tank.body.immovable = false;
-    this.tank.body.collideWorldBounds = true;
+    this.tank.body.collideWorldBounds = false;
     this.tank.body.bounce.setTo(1, 1);
 
     this.tank.angle = game.rnd.angle();
 
-    game.physics.arcade.velocityFromRotation(this.tank.rotation, 100, this.tank.body.velocity);
+    game.physics.arcade.velocityFromRotation(this.tank.rotation, 50, this.tank.body.velocity);
   }
   
   damage () {
@@ -67,7 +74,8 @@ class EnemyTank {
   }
 
   update () {
-
+      this.tank.body.collideWorldBounds = false;
+      //print("tank pos=${this.tank.x},${this.tank.y}");
       this.shadow.x = this.tank.x;
       this.shadow.y = this.tank.y;
       this.shadow.rotation = this.tank.rotation;
