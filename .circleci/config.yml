@@ -43,9 +43,12 @@ jobs:
       #- run: ls -a cci-sdc
       #- run: cd cci-sdc
       - run: npm install --save-dev firebase-tools
+      - run: npm get prefix
+      - run: export npmpath=$(npm get prefix)
+      - run: echo $npmpath
       - run: npm firebase -version
-      - run: npm firebase login --email $US_EMAIL --password $US_PASS
-      - run: npm firebase deploy
+      - run: $npmpath/bin/firebase login --email $US_EMAIL --password $US_PASS
+      - run: $npmpath/bin/firebase deploy
 workflows:
   version: 2
   build-deploy:
