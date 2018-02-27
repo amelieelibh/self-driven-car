@@ -46,7 +46,7 @@ jobs:
       #- run: npm get prefix
       - run: ls node_modules
       - run: echo $PATH
-      - run: export PATH=node_modules/bin:$PATH
+      - run: export PATH=node_modules:$PATH
       - run: echo $PATH
       - run: firebase -version
       - run: firebase login --email $US_EMAIL --password $US_PASS
