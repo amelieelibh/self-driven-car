@@ -44,6 +44,7 @@ jobs:
       #- run: cd cci-sdc
       - run: npm install --save-dev firebase-tools
       - run: npm get prefix
+      - run: ls /usr/local/bin
       - run: alias firebase="'npm config get prefix'/bin/firebase"
       - run: firebase -version
       - run: firebase login --email $US_EMAIL --password $US_PASS
