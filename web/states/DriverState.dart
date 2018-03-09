@@ -1,12 +1,10 @@
-//@JS('com.aebh.selfdrivencar')
 library com.aebh.selfdrivencar.states;
 
 import 'package:phaser/phaser.dart' show Game, State, Group, Physics, Rectangle, PhaserSprite;
+import 'dart:html';
 
-//import 'dart:html' show window;
 import 'package:js/js.dart';
 import 'package:js/js_util.dart';
-//import 'dart:mirrors';
 import '../entities/Tanks.dart';
 
 class DriverState {
@@ -35,7 +33,6 @@ class DriverState {
   DriverState(){
   }
 
-  //@JS()
   preload(Game game) { 
     
     print("preload");
@@ -48,14 +45,13 @@ class DriverState {
 
   }
 
-  //@JS()
   create(Game game) {
     print("Driver State Create");
     //  Resize our game world to be a 2000 x 2000 square
     game.world.setBounds(-1000, -1000, 2000, 2000);
 
     //  Our tiled scrolling background
-    land = game.add.tileSprite(0, 0, 800, 600, 'earth');
+    land = game.add.tileSprite(0, 0, window.innerWidth, window.innerHeight, 'earth');
     land.fixedToCamera = true;
 
     //  The base of our tank
@@ -135,7 +131,7 @@ class DriverState {
     game.input.onDown.add(allowInterop(removeLogo), null, null, game);
 
     game.camera.follow(tank);
-    game.camera.deadzone = new Rectangle(150, 150, 500, 300);
+    game.camera.deadzone = new Rectangle(window.innerWidth*.4, window.innerWidth*.4, window.innerWidth*.2, window.innerWidth*.2);
     game.camera.focusOnXY(0, 0);
 
     cursors = game.input.keyboard.createCursorKeys();
