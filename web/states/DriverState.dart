@@ -248,9 +248,9 @@ class DriverState {
   }
   
   dynamic jsonMap(){
-    return jsify({'preload': preload, 
-            'create' : create,
-            'update' : update, 
-            'render' : render});
+    return jsify({'preload': allowInterop(preload), 
+            'create' : allowInterop(create),
+            'update' : allowInterop(update), 
+            'render' : allowInterop(render)});
   }
 }

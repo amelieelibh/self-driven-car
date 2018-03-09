@@ -28,11 +28,11 @@ main() {
   
   Game game = new Game(window.innerWidth, window.innerHeight, Phaser.CANVAS,
       'phaser-example');
-  game.state.add('Boot', new Object());
-  game.state.add('Preloades', new Object());
-  game.state.add('MainMenu', new Object());
+  // game.state.add('Boot', new Object());
+  // game.state.add('Preloades', new Object());
+  // game.state.add('MainMenu', new Object());
   game.state.add('Game', driverState);
-  game.state.add('EndGame', new Object());
+  // game.state.add('EndGame', new Object());
   print("start");
   game.state.start('Game');
   print("main end");

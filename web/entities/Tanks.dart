@@ -17,7 +17,7 @@ class EnemyTank {
   
 
   EnemyTank(int index, Game game, PhaserSprite player, Group  bullets) {
-      print("worldX,worldY=${game.world.width},${game.world.height}");
+    //   print("worldX,worldY=${game.world.width},${game.world.height}");
     var x = game.world.randomX;
     var y = game.world.randomY;
     if(x >= 0 && x < 500){
@@ -26,7 +26,7 @@ class EnemyTank {
         x = -500;
     }
     //x = -2000; y = 0;
-    print("x,y=$x,$y");
+    // print("x,y=$x,$y");
     this.game = game;
     this.health = 3;
     this.player = player;
