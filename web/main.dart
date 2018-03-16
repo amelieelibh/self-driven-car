@@ -32,7 +32,7 @@ main() {
   var driverState = new DriverState().jsonMap();
   print("states");
   
-  Game game = new Game(width, height, Phaser.CANVAS,
+  Game game = new Game(width, height, Phaser.AUTO,
       'phaser-example');
   // game.state.add('Boot', new Object());
   // game.state.add('Preloades', new Object());
