@@ -1,6 +1,6 @@
 library com.aebh.selfdrivencar.states;
 
-import 'package:phaser/phaser.dart' show Game, Group, Physics, PhaserSprite, Rectangle;
+import 'package:phaser/phaser.dart' show Game, Group, Tilemap, PhaserSprite, Rectangle;
 import 'dart:html' show window;
 
 import 'package:js/js.dart';
@@ -11,9 +11,12 @@ class DriverState {
 
   Car car;
   var land;
+  var map;
+  var layer;
+  var maker;
   Group explosions;
 
-  var logo;
+//  var logo;
 
   var cursors;
 
@@ -27,28 +30,44 @@ class DriverState {
     game.load.image('earth', 'assets/games/tanks/scorched_earth.png');
     game.load.spritesheet('kaboom', 'assets/games/tanks/explosion.png', 64, 64, 23);
 
+    game.load.tilemap('map', 'assets/sprites/course1.json', null, Tilemap.TILED_JSON);
+    game.load.image('tiles', 'assets/sprites/track.png');
+
   }
 
   create(Game game) {
     print("Driver State Create");
-    //  Resize our game world to be a 2000 x 2000 square
-    game.world.setBounds(-1000, -1000, 2000, 2000);
+    //  Resize our game world to be a 4920 x 4920 square
+    game.world.setBounds(-2460, -2460, 2460, 2460);
 
     //  Our tiled scrolling background
-    land = game.add.tileSprite(0, 0, window.innerWidth, window.innerHeight, 'earth');
-    land.fixedToCamera = true;
+    // land = game.add.tileSprite(0, 0, window.innerWidth, window.innerHeight, 'earth');
+    // land.fixedToCamera = true;
 
-    //  Explosion pool
-    explosions = game.add.group();
+    map = game.add.tilemap('map');
 
-    for (var i = 0; i < 10; i++) {
-      var explosionAnimation = explosions.create(0, 0, 'kaboom', 0, false);
-      explosionAnimation.anchor.setTo(0.5, 0.5);
-      explosionAnimation.animations.add('kaboom');
-    }
+    map.addTilesetImage('tiles');
+    // map.setCollisionBetween(1, 12);
+    layer = map.createLayer('Course Test');
+    layer.resizeWorld();
 
-    logo = game.add.sprite(0, 200, 'logo');
-    logo.fixedToCamera = true;
+//  Our painting marker
+    // marker = game.add.graphics();
+    // marker.lineStyle(2, 0xffffff, 1);
+    // marker.drawRect(0, 0, 32, 32);
+
+
+    // //  Explosion pool
+    // explosions = game.add.group();
+
+    // for (var i = 0; i < 10; i++) {
+    //   var explosionAnimation = explosions.create(0, 0, 'kaboom', 0, false);
+    //   explosionAnimation.anchor.setTo(0.5, 0.5);
+    //   explosionAnimation.animations.add('kaboom');
+    // }
+
+    // logo = game.add.sprite(0, 200, 'logo');
+    // logo.fixedToCamera = true;
 
     game.input.onDown.add(allowInterop(removeLogo), null, null, game);
 
@@ -66,17 +85,18 @@ class DriverState {
   //@JS("removeLogo")
   removeLogo(p,e, Game game) {
     game.input.onDown.remove(allowInterop(removeLogo));
-    logo.kill();
+    // logo.kill();
   }
 
   //@JS()
   update(Game game) {
     //game.physics.arcade.overlap(enemyBullets, tank, allowInterop(bulletHitPlayer), null);
-
-    car.update(cursors);
+    if(cursors != null){
+      car.update(cursors);
+    }
     
-    land.tilePosition.x = -game.camera.x;
-    land.tilePosition.y = -game.camera.y;
+    // land.tilePosition.x = -game.camera.x;
+    // land.tilePosition.y = -game.camera.y;
   }
 
   //@JS()

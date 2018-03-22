@@ -1,9 +1,10 @@
 library com.aebh.selfdrivencar.entities;
 
-import 'package:phaser/phaser.dart' show Game, PhaserSprite, Group, Physics;
+import 'package:phaser/phaser.dart' show Game, PhaserSprite, PhaserPoint, Physics;
 
 class Car {
   static const ROTATION_VEL = 50;
+  static const TURN_ANGLE_SPEED = 2;
 
   bool alive;
   int health=100;
@@ -15,8 +16,8 @@ class Car {
 
 
   Car(Game game) {
-    var x = 0;
-    var y = 0;
+    var x = -2400;
+    var y = -2400;
     this.game = game;
     this.health = 100;
     this.alive = true;
@@ -24,8 +25,12 @@ class Car {
     this.shadow = game.add.sprite(x, y, 'shadow', 'shadow');
     this.sprite = game.add.sprite(x, y, 'car', 'car');
 
-    this.sprite.width /= 2;
-    this.sprite.height /= 2;
+    // this.sprite.width /= 1;
+    // this.sprite.height /= 1;
+    
+    // this.shadow.width /= 1;
+    // this.shadow.height /= 1;
+    
 
     this.shadow.anchor.setTo(0.5);
     this.sprite.anchor.setTo(0.5);
@@ -63,23 +68,35 @@ class Car {
     if(!alive) return;
 
     if (cursors.left.isDown) {
-      sprite.angle -= 4;
+      sprite.angle -= TURN_ANGLE_SPEED;
     } else if (cursors.right.isDown) {
-      sprite.angle += 4;
+      sprite.angle += TURN_ANGLE_SPEED;
     }
 
+    bool isReverse = false;
     if (cursors.up.isDown) {
-      //  The speed we'll travel at
-      currentSpeed = 300;
+      if (currentSpeed >= 300) {
+          currentSpeed = 300;
+      } else {
+          currentSpeed += 20;
+      }
+    } else if (cursors.down.isDown) {
+      if (currentSpeed <= -150) {
+        currentSpeed = -150;
+      } else {
+        currentSpeed -= 20;
+      }
     } else {
-      if (currentSpeed > 0) {
-        currentSpeed -= 4;
+      if (currentSpeed > 10) {
+        currentSpeed -= 10;
+      } else if (currentSpeed < -10) {
+        currentSpeed += 10;
+      } else {
+        currentSpeed = 0;
       }
     }
 
-    if (currentSpeed > 0) {
-      game.physics.arcade.velocityFromRotation(sprite.rotation, currentSpeed, sprite.body.velocity);
-    }
+    game.physics.arcade.velocityFromRotation(sprite.rotation, currentSpeed, sprite.body.velocity);
 
     if (game.input.activePointer.isDown) {
       //  Boom!
