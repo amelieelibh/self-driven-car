@@ -16,8 +16,8 @@ class Car {
 
 
   Car(Game game) {
-    var x = -2400;
-    var y = -2400;
+    var x = -2200;
+    var y = -2200;
     this.game = game;
     this.health = 100;
     this.alive = true;
