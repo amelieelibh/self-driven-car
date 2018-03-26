@@ -1,6 +1,6 @@
 library com.aebh.selfdrivencar.states;
 
-import 'package:phaser/phaser.dart' show Game, Group, Tilemap, PhaserPoint, Rectangle, Button;
+import 'package:phaser/phaser.dart' show Game, Group, Tilemap, PhaserPoint, Rectangle, Button, Physics;
 import 'dart:html' show window;
 import 'dart:mirrors'; 
 import 'package:js/js.dart';
@@ -12,7 +12,7 @@ class DriverState {
 
   Vehicle car;
   var land;
-  var map;
+  Tilemap map;
   var layer;
   var maker;
   Group explosions;
@@ -64,17 +64,20 @@ class DriverState {
     // map.setCollisionBetween(1, 12);
     layer = map.createLayer('Course Test');
     layer.resizeWorld();
+    map.setCollisionBetween(4, 4);//, true, 'Course Test');
+    
+    game.physics.startSystem(Physics.ARCADE);
 
     game.input.onDown.add(allowInterop(removeLogo), null, null, game);
 
     //Creating car
     // car = new Car(game);
     car = Vehicle.VEHICLE_SPORT_CAR;
-    car.initialize(game, -2200, -2200);
+    car.initialize(game, 150, 150);
 
     game.camera.follow(car.sprite);
-    game.camera.deadzone = new Rectangle(window.innerWidth*.4, window.innerWidth*.4, window.innerWidth*.2, window.innerWidth*.2);
-    game.camera.focusOnXY(0, 0);
+    game.camera.deadzone = new Rectangle(window.innerWidth*.4, window.innerWidth*.4, window.innerHeight*.2, window.innerHeight*.2);
+    game.camera.focusOnXY(car.sprite.x, car.sprite.y);
 
     cursors = game.input.keyboard.createCursorKeys();
     
@@ -107,7 +110,7 @@ class DriverState {
   
   onDragEndJoystick(var sprite, var point, [bool b]){
     swUp = swDown = swLeft = swRight = 0.0;
-    print("reset to swUp=$swUp, swDown=$swDown, swLeft=$swLeft, swRight=$swRight");
+    // print("reset to swUp=$swUp, swDown=$swDown, swLeft=$swLeft, swRight=$swRight");
     isJoystickOn = false;
   }
   // onDragJoystick(var sprite, var point
@@ -116,27 +119,29 @@ class DriverState {
       return;
     }
     swUp = swDown = swLeft = swRight = 0.0;
-    // print("joystic.pos=${sprite.x},${sprite.y}");
-    // print("point.pos=${sprite.input.pointerX()},${sprite.input.pointerY()} >> ${point.clientX},${point.clientY}");
-    print("joystic.pos=${joystickPos.x},${joystickPos.y}");
-    print("point.pos=${point.clientX},${point.clientY}");
+    // print("joystic.pos=${joystickPos.x},${joystickPos.y}");
+    // print("point.pos=${point.clientX},${point.clientY}");
     if(point.clientX > joystickPos.x){
     // if(sprite.input.pointerX()>0){
-        swRight = 1.0;
+        // swRight = 1.0;
+        swRight = (point.clientX - joystickPos.x) * 2 / joystick.width;
     }
     if(point.clientX < joystickPos.x){
     // if(sprite.input.pointerX()<0){
-        swLeft = 1.0;
+        // swLeft = 1.0;
+        swLeft = -(point.clientX - joystickPos.x) * 2 / joystick.width;
     }
     if(point.clientY > joystickPos.y){
     // if(sprite.input.pointerY()>0){
-        swDown = 1.0;
+        // swDown = 1.0;
+        swDown = (point.clientY - joystickPos.y) * 2 / joystick.height;
     }
     if(point.clientY < joystickPos.y){
     // if(sprite.input.pointerY()<0){
-        swUp = 1.0;
+        // swUp = 1.0;
+        swUp = -(point.clientY - joystickPos.y) * 2 / joystick.height;
     }
-    print("swUp=$swUp, swDown=$swDown, swLeft=$swLeft, swRight=$swRight");
+    // print("swUp=$swUp, swDown=$swDown, swLeft=$swLeft, swRight=$swRight");
   }
 
   //@JS("removeLogo")
@@ -176,6 +181,8 @@ class DriverState {
       down > 0 ? down : swDown, 
       left > 0 ? left : swLeft, 
       right > 0 ? right : swRight);
+
+    game.physics.arcade.collide(car.sprite, layer);
   }
 
   //@JS()
@@ -183,11 +190,9 @@ class DriverState {
 
     // game.debug.text('Active Bullets: ' + bullets.countLiving() + ' / ' + bullets.length, 32, 32);
     game.debug.text('Status: ' + car.health.toString(), 32, 32);
-    game.debug.text('x: ' + joystick.input.snapX.toString(), 5, 15);     
-    game.debug.text('y: ' + joystick.input.snapY.toString(), 5, 30);
-
-    game.debug.spriteInputInfo(joystick, 32, 64);
-    // game.debug.geom(joystick.input._tempPoint);
+    game.debug.text("Speed: ${car.currentSpeed}", 32, 64);
+    game.debug.text("V=${car.currentGear} RPM: ${car.currentRPM}", 32, 96);
+    // game.debug.spriteInputInfo(joystick, 32, 64);
 
   }
   

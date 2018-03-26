@@ -10,8 +10,8 @@ main() {
   print(""+window.devicePixelRatio.toString());
   var w = window.innerWidth * window.devicePixelRatio;
   var h = window.innerHeight * window.devicePixelRatio;
-  var width = (h > w) ? h : w;
-  var height = (h > w) ? w : h;
+  var width = w; // (h > w) ? h : w;
+  var height = h;// (h > w) ? w : h;
 
   // Hack to avoid large devices. Tell it to scale up.
   if (window.devicePixelRatio > 1) {
